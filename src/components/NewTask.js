@@ -1,12 +1,18 @@
 import { useState } from 'react'
 import '../App.css'
+import { useDispatch,useSelector } from 'react-redux';
+import { add } from '../store/taskSlice';
 
 export const NewTask = () =>{
+
+    const dispatch = useDispatch();
+    const taskList = useSelector(state => state.taskState.taskList);
+    console.log("TaskRedux",taskList);
 
     const [task,setTask] = useState("");
     const [priority,setPriority] = useState("");
     const [date,setDate] = useState("");
-    const [taskList,setTaskList] = useState([]);
+    const [taskList1,setTaskList] = useState([]);
     const [itemId, setItemId] = useState(0);
 
     const handleTask = (e) =>{
@@ -26,11 +32,13 @@ export const NewTask = () =>{
             priority,
             date
         }
-        setTaskList([taskCurr,...taskList]);
+        setTaskList([taskCurr,...taskList1]);
+
+        dispatch(add(taskCurr));
         
     }
     const deleteRow = (id) =>{
-        setTaskList(taskList.filter(item=>item.id!==id));
+        setTaskList(taskList1.filter(item=>item.id!==id));
     }
 
     return(
@@ -54,7 +62,7 @@ export const NewTask = () =>{
                         </thead>
                         <tbody>
          
-        {taskList.map((t)=>(
+        {taskList1.map((t)=>(
             // <div className="row1">
                 <tr>
             <td>{t.task}</td>

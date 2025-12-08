@@ -1,4 +1,4 @@
-const {taskSlice} = require("@reduxjs/toolkit");
+const {createSlice} = require("@reduxjs/toolkit");
 
 const taskSlice = createSlice({
     name : "tasks",
@@ -8,7 +8,7 @@ const taskSlice = createSlice({
     reducers : {
         add(state,action){
             const updatedTaskList = state.taskList.concat(action.payload);
-            return {...state,cartList : updatedTaskList};
+            return {...state,taskList : updatedTaskList};
         }
     }
 
