@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import '../App.css'
 import { useDispatch,useSelector } from 'react-redux';
-import { add } from '../store/taskSlice';
+import { add, remove } from '../store/taskSlice';
 
 export const NewTask = () =>{
 
     const dispatch = useDispatch();
     const taskList = useSelector(state => state.taskState.taskList);
-    console.log("TaskRedux",taskList);
 
     const [task,setTask] = useState("");
     const [priority,setPriority] = useState("");
@@ -33,12 +32,12 @@ export const NewTask = () =>{
             date
         }
         setTaskList([taskCurr,...taskList1]);
-
         dispatch(add(taskCurr));
         
     }
     const deleteRow = (id) =>{
         setTaskList(taskList1.filter(item=>item.id!==id));
+        dispatch(remove(id));
     }
 
     return(
@@ -50,6 +49,8 @@ export const NewTask = () =>{
       <input type="date" value={date} onChange={handleDate} className='inputBox'></input>
     </div>
     <div className='row1'><button onClick={handleSubmit} className = 'addButton'>Add</button></div>
+    <div className='row1'><button onClick={()=>{console.log("redux",taskList)}} className = 'addButton'>Check</button></div>
+
     <div>
         <table className='tableStyle'>
             <thead>
